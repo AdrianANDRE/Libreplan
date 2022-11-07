@@ -38,11 +38,18 @@ public class Home extends ToolBox{
     //à partir du mouseOver accessResourcesMenu, les coordonnées des différents menus sont les suivantes :
     // participants :   y=25
     // machines :       y=50
-    // calendrier :     y=100
+    // calendriers :     y=100
     public Participants accessParticipants() {
         accessResourcesMenu();
         action.moveToElement(RessourcesMenu, 50,25).perform();
         action.click().perform();
         return PageFactory.initElements(driver, Participants.class);
     }
+    public Calendrier accessCalendriers() {
+        accessResourcesMenu();
+        action.moveToElement(RessourcesMenu, 50,100).perform();
+        action.click().perform();
+        return PageFactory.initElements(driver, Calendrier.class);
+    }
+
 }
