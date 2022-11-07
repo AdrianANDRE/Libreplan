@@ -1,6 +1,5 @@
 package PageObject;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static org.junit.Assert.assertTrue;
 
-public class LoginLogout extends ToolBox {
+public class Login extends ToolBox {
     @FindBy(xpath = "//input[@id=\"textfield\"]")
     WebElement userField;
 
@@ -21,9 +20,11 @@ public class LoginLogout extends ToolBox {
     @FindBy(xpath = "//a[@class=\"cerrar_sesion\"]")
     WebElement buttonLogout;
 
-    public LoginLogout(WebDriver driver) {
+    public Login(WebDriver driver) {
         super(driver);
+
     }
+
     //Method to login
     public Home login (){
         userField.clear();
@@ -34,9 +35,9 @@ public class LoginLogout extends ToolBox {
         return PageFactory.initElements(driver,Home.class);
     }
     //Method to logout
-    public LoginLogout logout(){
+    public Login logout(){
         buttonLogout.click();
-        return PageFactory.initElements(driver,LoginLogout.class);
+        return PageFactory.initElements(driver, Login.class);
 
     }
 }
