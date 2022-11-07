@@ -16,6 +16,9 @@ public class Home extends ToolBox{
     @FindBy(xpath = "//a[@class=\"cerrar_sesion\"]")
     WebElement buttonLogout;
 
+    @FindBy(xpath = "//button[@class=\"z-menu-btn\"][contains(text(),\"Ressources\")]")
+    WebElement RessourcesMenu;
+
     //Super contructeur pour faire usage du driver
     public Home(WebDriver driver) {
         super(driver);
@@ -29,13 +32,17 @@ public class Home extends ToolBox{
 
 
     public void accessResourcesMenu () {
-        WebElement mouseOverRessources = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class=\"z-menu-btn\"][contains(text(),\"Ressources\")]")));
-        action.moveToElement(mouseOverRessources).perform();
-        mouseOverRessources.click();
+        wait.until(ExpectedConditions.visibilityOf(RessourcesMenu));
+        action.moveToElement(RessourcesMenu).perform();
     }
+    //à partir du mouseOver accessResourcesMenu, les coordonnées des différents menus sont les suivantes :
+    // participants :   y=25
+    // machines :       y=50
+    // calendrier :     y=100
     public Participants accessParticipants() {
-        WebElement mouseOverParticipants = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@href=\"/libreplan/resources/worker/worker.zul\"]")));
-        action.moveToElement(mouseOverParticipants).build().perform();
+        accessResourcesMenu();
+        action.moveToElement(RessourcesMenu, 50,25).perform();
+        action.click().perform();
         return PageFactory.initElements(driver, Participants.class);
     }
 }

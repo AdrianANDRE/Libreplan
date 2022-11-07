@@ -30,20 +30,9 @@ public class TestingAchTouteDouce extends ToolBox {
         Login log = PageFactory.initElements(driver, Login.class);
         //"Classe de destination" Variable = log."methode"();
         Home home = log.login();
-        home.accessResourcesMenu();
         Thread.sleep(2000);
-        home.accessParticipants();
+        Participants participantsPage = home.accessParticipants();
         Thread.sleep(2000);
-//        Participants participantsPage = home.accessParticipants();
-        //move to ressources
-//        WebElement mouseOverRessources = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class=\"z-menu-btn\"][contains(text(),\"Ressources\")]")));
-//        action.moveToElement(mouseOverRessources).build().perform();
-        //move to participants
-//        WebElement mouseOverParticipants = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@href=\"/libreplan/resources/worker/worker.zul\"]")));
-        // participants :   y=25
-        // machines :       y=50
-        // calendrier :     y=100
-//        action.moveToElement(mouseOverRessources, 50,25).build().perform();
 //        home.logout();
 //        driver.quit();
 
