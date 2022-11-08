@@ -73,9 +73,8 @@ public class PROTA01 {
 
         //td[2]/div/button
 
-        WebElement menuCalandrier = driver.findElement(By.xpath("//td[2]/div/button[contains(.,'Calendrier')]"));
-        Actions a = new Actions(driver);
-        action.moveToElement(menuCalandrier).perform();
+        WebElement menuCalendrier = driver.findElement(By.xpath("//td[2]/div/button[contains(.,'Calendrier')]"));
+        action.moveToElement(menuCalendrier).perform();
          Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@href=\"/libreplan/planner/index.zul;orders_list\"]")).click();
 

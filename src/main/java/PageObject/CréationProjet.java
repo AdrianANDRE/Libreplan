@@ -2,7 +2,11 @@ package PageObject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import static org.junit.Assert.assertTrue;
+
 
 public class CréationProjet {
 
@@ -19,13 +23,15 @@ public class CréationProjet {
         public WebElement nomProjet;
 
         @FindBy(xpath = "//*[@checked=\"checked\"]")
-        public WebElement décocher;
+        public WebElement decocher;
 
         @FindBy(xpath = "//td[1]/input")
         public WebElement codeProjet;
 
         @FindBy(xpath = "//tr[2]/td[contains(.,'Accepter')]")
         public WebElement accepter;
+
+
 
         @FindBy(xpath = "//*[@title=\"Annuler l'édition\"]")
         public WebElement annulerEdition;
@@ -36,10 +42,10 @@ public class CréationProjet {
         @FindBy(xpath = "//tbody/tr[2]/td[contains(.,'OK')]")
         public WebElement ok;
 
-        @FindBy(xpath = "//td[2]/div/button")
+        @FindBy(xpath = "//td[2]/div/button[contains(.,'Calendrier')]")
         public WebElement menuCalendrier;
 
-        @FindBy(xpath = "//td[2]/div/button")
+        @FindBy(xpath = "//*[@href=\"/libreplan/planner/index.zul;orders_list\"]")
         public WebElement menuProjet;
 
         @FindBy(xpath = "//tr[4]/td[2]/div/i/input")
@@ -51,6 +57,19 @@ public class CréationProjet {
         @FindBy(xpath = "//*[@title=\"Supprimer\"]")
         public WebElement supprimerProjet;
 
+        @FindBy(xpath = "//tr[6]/td[2]/div/span/i/input")
+        public WebElement champClient;
+
+        @FindBy(xpath = "//tr[2]/td[2]/div/span/i/input")
+        public WebElement modele;
+
+
+
+
+
+
+
+
 
 
 
@@ -60,8 +79,21 @@ public class CréationProjet {
 
         public void créerUnprojet(WebDriver driver, String nomDuProjet, String numerosProjet, String dateDebutprojet, String dateFinProjet) {
                 ajouter.click();
+                assertTrue(decocher.isDisplayed());
+                assertTrue(nomProjet.getText().isEmpty());
+                assertTrue(debutProjet.isDisplayed());
+                assertTrue(finProjet.getText().isEmpty());
+                assertTrue(accepter.isDisplayed());
+                assertTrue(annuler.isDisplayed());
+                assertTrue(champClient.getText().isEmpty());
+
+
+
+
+
+
                 nomProjet.sendKeys("nomDuProjet");
-                décocher.click();
+                decocher.click();
                 codeProjet.clear();
                 codeProjet.sendKeys("numerosProjet");
                 debutProjet.clear();
@@ -77,19 +109,23 @@ public class CréationProjet {
 
         }
 
+        public void testAnnulerEdition1(WebDriver driver){
+                annulerEdition.click();
+                annuler.click();
 
 
-
-
-
-
-        public void changeNumArticle(WebDriver driver, String number) {
-            codeProjet.clear();
-
-            codeProjet.sendKeys("2");
+        }
+        public void testAnnulerEdition2(WebDriver driver){
+                annulerEdition.click();
+                ok.click();
         }
 
+        public void afficherProjets(WebDriver driver){
 
+                Actions a = new Actions(driver);
+                a.moveToElement(menuCalendrier).perform();
+                menuProjet.click();
+        }
 
 
 }
