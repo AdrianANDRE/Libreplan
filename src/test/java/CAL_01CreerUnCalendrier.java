@@ -18,10 +18,11 @@ public class CAL_01CreerUnCalendrier extends ToolBox {
     }
     @Test
     public void connect () throws InterruptedException {
-        //à effectuer à chaque methode de test pour faire usage de la classe login
+        //Permet d'instancier la classe Login
         Login log = PageFactory.initElements(driver, Login.class);
-        //"Classe de destination" Variable = log."methode"();
+        //Permet de se login et de donner une variable pour intéragir avec les méthodes de la CLasse Home
         Home home = log.login();
+        //Permet d'aller sur la page Ressources/Calendrier avec la mise en place d'une variable pour intéragir avec les méthodes de la classe Calendrier
         Calendrier calendar = home.moveToCalendrier();
         calendar.assertionTableau();
         calendar.creatCalendrierTest1();

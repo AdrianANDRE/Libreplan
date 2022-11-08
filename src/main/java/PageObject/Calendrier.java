@@ -1,20 +1,17 @@
 package PageObject;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class Calendrier extends ToolBox {
+    static Logger log = Logger.getLogger(Calendrier.class);
     @FindBy(xpath = "//div[@class=\"z-dottree\"]/following-sibling::span")
     WebElement buttonCreer;
     @FindBy(xpath = "//div/input[contains(@class, 'z-textbox')]")
@@ -37,13 +34,10 @@ public class Calendrier extends ToolBox {
     WebElement messageInfoCreation;
     @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]")
     WebElement calendrierTest1;
-
     @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]//ancestor::tr//img[@src=\"/libreplan/common/img/ico_derived1.png\"]")
     WebElement buttonDeriveTest1;
-
     @FindBy(xpath = "//div[@class=\"calendar-tabbox z-tabbox\"]//span[contains(.,\"Calendrier\")]")
     WebElement fieldType;
-
     @FindBy(xpath = "//span[.=\"Calendrier - Test 1 existe déjà\"]")
     WebElement messageWARNING;
     @FindBy(xpath = "//div[.=\"Calendrier - Test 1\"]/ancestor::tr/following-sibling::tr//span[contains(.,\"Test Calendrier Dérivé\")]")
@@ -54,93 +48,108 @@ public class Calendrier extends ToolBox {
     WebElement buttonCopyTest1;
     @FindBy(xpath = "//span[@class=\"z-dottree-ico z-dottree-firstspacer\"]/following-sibling::span[.=\"Calendrier - Test 2\"]")
     WebElement inTableButNotUnderTest01;
-    @FindBy(xpath = "//span[.=\"Calendrier - Test 2\"]/ancestor::td/following-sibling::td[3]//span[@title=\"Supprimer\"]")
+    @FindBy(xpath = "//span[.=\"Calendrier - Test 2\"]/ancestor::tr//span[@title=\"Supprimer\"]")
     WebElement buttonSupprTest2;
-    @FindBy(xpath = "//span[contains(.,\"Dérivé\")]/ancestor::td/following-sibling::td[3]//span[@title=\"Supprimer\"]")
+    @FindBy(xpath = "//span[contains(.,\"Dérivé\")]/ancestor::tr//span[@title=\"Supprimer\"]")
     WebElement buttonSupprDerive;
-    @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]/ancestor::td/following-sibling::td[3]//span[@title=\"Supprimer\"]")
+    @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]/ancestor::tr//span[@title=\"Supprimer\"]")
     WebElement buttonSupprTest1;
     @FindBy(xpath = "//td[.=\"OK\"][@class=\"z-button-cm\"]")
     WebElement buttonOK;
-
 
 
     //Super contructeur
     public Calendrier(WebDriver driver) {
         super(driver);
     }
-    //TODO faire map <int,String>
-    // map<int, string> map = new hashmap<>()
-    //map.put(1, "nom")
-    //Vérifie les nom de la première ligne du tableau une fois sur l'écran calendrier
-    public void assertionTableau(){
-        String[] verifTableau = {"Nom", "Hérité de la date", "Héritages à jour", "Opérations"};
-        for (String name:verifTableau){
-            assertEquals(name,driver.findElement(By.xpath("//th//div[.=\""+name+"\"]")).getText());
-        }
 
+    public void assertionTableau() {
+        String[] verifTableau = {"Nom", "Hérité de la date", "Héritages à jour", "Opérations"};
+        for (String name : verifTableau) {
+            assertEquals(name, driver.findElement(By.xpath("//th//div[.=\"" + name + "\"]")).getText());
+
+
+        }
     }
+
     public void creatCalendrierTest1() throws InterruptedException {
-        buttonCreer.click();
+        wait.until(ExpectedConditions.elementToBeClickable(buttonCreer)).click();
         //Assertion des vérifications de la page
         assertTrue((wait.until(ExpectedConditions.visibilityOf(verifPeriode))).isDisplayed());
-        assertTrue(buttonAnnuler.isDisplayed());
-        assertTrue(verifReservation.isDisplayed());
-        assertTrue(verifReservation.isDisplayed());
-        assertTrue(verifException.isDisplayed());
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(buttonAnnuler))).isDisplayed());
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(verifReservation))).isDisplayed());
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(verifException))).isDisplayed());
         //rentre le nom du calendrier
+        wait.until(ExpectedConditions.visibilityOf(fieldNom));
         fieldNom.clear();
         fieldNom.sendKeys("Calendrier - Test 1");
+        log.info("On rentre le nom Calendrier - Test 1");
         //Vérifie que la checkbox Générer le code est bien selectionné
-        checkBoxCode.isSelected();
-        buttonEnregistrer.click();
-        messageInfoCreation.isDisplayed();
-        calendrierTest1.isDisplayed();
-
+        wait.until(ExpectedConditions.visibilityOf(checkBoxCode)).isSelected();
+        log.info("La checkbo est bien sélectionné");
+        wait.until(ExpectedConditions.visibilityOf(buttonEnregistrer)).click();
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(messageInfoCreation))).isDisplayed());
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(calendrierTest1))).isDisplayed());
+        log.info("Le Calendrier - Test 1 est bien présent dans le tableau des calendriers");
     }
+
     public void creatDerive() throws InterruptedException {
-        buttonDeriveTest1.click();
-        Thread.sleep(2000);
-        assertEquals("",fieldNom.getAttribute("value"));
-        fieldType.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(buttonDeriveTest1)).click();
+        assertEquals("", wait.until(ExpectedConditions.visibilityOf(fieldNom)).getAttribute("value"));
+        log.info("Le champ nom est bien vide ");
+        assertTrue((wait.until(ExpectedConditions.visibilityOf(fieldType))).isDisplayed());
+        wait.until(ExpectedConditions.visibilityOf(fieldNom));
+        fieldNom.clear();
         fieldNom.sendKeys("Calendrier - Test 1");
-        checkBoxCode.isSelected();
-        buttonEnregistrerContinuer.click();
-        messageWARNING.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(checkBoxCode)).isSelected();
+        wait.until(ExpectedConditions.visibilityOf(buttonEnregistrerContinuer)).click();
+        wait.until(ExpectedConditions.visibilityOf(messageWARNING)).isDisplayed();
+        log.info("Il y a bien la présence d'un message d'erreur comme quoi le nom du calendrier est déjà utilisé");
+        wait.until(ExpectedConditions.visibilityOf(fieldNom));
+        fieldNom.clear();
         fieldNom.sendKeys("Calendrier - Test Calendrier Dérivé");
-        buttonEnregistrerContinuer.click();
-        messageInfoCreation.isDisplayed();
-        buttonAnnuler.click();
-        Thread.sleep(2000);
-        deriveTableUnderTest01.isDisplayed();
-        dottreeOpen.click();
+        wait.until(ExpectedConditions.visibilityOf(buttonEnregistrerContinuer)).click();
+        wait.until(ExpectedConditions.visibilityOf(messageInfoCreation)).isDisplayed();
+        log.info("Il y a bien la confirmation de la création du calendrier via un message");
+        wait.until(ExpectedConditions.visibilityOf(buttonAnnuler)).click();
+        wait.until(ExpectedConditions.visibilityOf(deriveTableUnderTest01)).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(dottreeOpen)).click();
         assertFalse(deriveTableUnderTest01.isDisplayed());
+        log.info("Le calendrier dérivé est bien un élément sous le Calendrier Test 1");
     }
 
     public void creatCopy() throws InterruptedException {
-        buttonCopyTest1.click();
-        Thread.sleep(2000);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("zk.copy",fieldNom);
-        assertEquals("Calendrier - Test 1",fieldNom.getAttribute("value"));
-        assertEquals("Calendrier source",fieldType.getText());
-        buttonEnregistrerContinuer.click();
-        messageWARNING.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(buttonCopyTest1)).click();
+        wait.until(ExpectedConditions.visibilityOf(fieldNom));
+        assertEquals("Calendrier - Test 1", fieldNom.getAttribute("value"));
+        assertEquals("Calendrier source", fieldType.getText());
+        wait.until(ExpectedConditions.visibilityOf(buttonEnregistrerContinuer)).click();
+        wait.until(ExpectedConditions.visibilityOf(messageWARNING)).isDisplayed();
+        log.info("Le calendrier est déjà présent et un message d'erreur confirme l'écart d'utilisation");
+        wait.until(ExpectedConditions.visibilityOf(fieldNom));
         fieldNom.clear();
         fieldNom.sendKeys("Calendrier - Test 2");
-        checkBoxCode.isSelected();
-        buttonEnregistrer.click();
-        messageInfoCreation.isDisplayed();
-        inTableButNotUnderTest01.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(checkBoxCode)).isSelected();
+        wait.until(ExpectedConditions.visibilityOf(buttonEnregistrer)).click();
+        wait.until(ExpectedConditions.visibilityOf(messageInfoCreation)).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(inTableButNotUnderTest01)).isDisplayed();
+        log.info("Le calendrier est bien présent dans le tableau général");
 
 
     }
-    public void supprCalendar(){
-        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest2)).click();
+
+    public void supprCalendar() throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest2));
+        buttonSupprTest2.click();
         buttonOK.click();
-        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprDerive)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprDerive));
+        buttonSupprDerive.click();
         buttonOK.click();
-        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest1)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest1));
+        buttonSupprTest1.click();
         buttonOK.click();
+        synchronized (wait){
+        wait.wait(2000);
+        }
     }
 }
