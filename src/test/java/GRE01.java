@@ -21,7 +21,7 @@ public class GRE01 extends ToolBox {
         ToolBox.startup();
     }
     @Test
-    public void connect () throws InterruptedException {
+    public void test () throws InterruptedException {
         //Instanciation page de login
         Login log = PageFactory.initElements(driver, Login.class);
         //Accès page d'accueil après s'être login
@@ -30,7 +30,16 @@ public class GRE01 extends ToolBox {
         //Accès à la page "participants"
         Participants participantsPage = home.moveToParticipants();
         Thread.sleep(2000);
+        //Vérification de la conformité de la page quand elle est sur la liste des participants
+        verificationListePartitipants(participantsPage);
 
+    }
+    @After
+    public void closingUp () {
+        driver.quit();
+    }
+
+    public void verificationListePartitipants (Participants participantsPage) {
         //Vérifier qu'on est bien sur la page des participants
         assertTrue(participantsPage.titreListeParticipants.isDisplayed());
         //Vérifier que les colonnes du tableau sont conformes à ce qu'on attend
@@ -52,9 +61,5 @@ public class GRE01 extends ToolBox {
         //- un bouton [Créer]
         assertTrue(participantsPage.buttonCreer.isDisplayed());
 
-    }
-    @After
-    public void closingUp () {
-        driver.quit();
     }
 }
