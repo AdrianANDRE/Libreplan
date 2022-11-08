@@ -34,11 +34,16 @@ public class PROTA01 {
         Login log = PageFactory.initElements(driver, Login.class);
         log.login();
         Thread.sleep(5000);
+
+
         driver.findElement(By.xpath("//*[@class=\"z-button-cm\"]")).click();
 
 
-        driver.findElement(By.xpath("//table/tbody[2]/tr[1]/td[2]/div/input")).sendKeys("PROJET_TEST1");
+        driver.findElement(By.xpath("//div/input")).sendKeys("PROJET_TEST1");
         driver.findElement(By.xpath("//*[@checked=\"checked\"]")).click(); ////td[3]/span/input
+        driver.findElement(By.xpath("//tr[4]/td[2]/div/i/input")).clear();
+        driver.findElement(By.xpath("//tr[4]/td[2]/div/i/input")).sendKeys("13/11/2022");
+        driver.findElement(By.xpath("//tr[5]/td[2]/div/i/input")).sendKeys("23/11/2022");
         driver.findElement(By.xpath("//td[1]/input")).clear();
         driver.findElement(By.xpath("//td[1]/input")).sendKeys("PRJTEST001");
 
@@ -68,17 +73,15 @@ public class PROTA01 {
 
         //td[2]/div/button
 
-        WebElement menuClandrier = driver.findElement(By.xpath("//td[2]/div/button"));
+        WebElement menuCalandrier = driver.findElement(By.xpath("//td[2]/div/button[contains(.,'Calendrier')]"));
         Actions a = new Actions(driver);
-        action.moveToElement(menuClandrier).perform();
-       // Thread.sleep(2000);
+        action.moveToElement(menuCalandrier).perform();
+         Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@href=\"/libreplan/planner/index.zul;orders_list\"]")).click();
 
 
-
-
-
-
+        driver.findElement(By.xpath("//*[@title=\"Supprimer\"]")).click();
+        driver.findElement(By.xpath("//tbody/tr[2]/td[contains(.,'OK')]")).click();
 
 
         Thread.sleep(5000);
