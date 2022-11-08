@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -41,6 +42,19 @@ public class Participants extends ToolBox {
     WebElement buttonEnregistrer;
     @FindBy(xpath = "//div[@class='z-window-embedded']/*/span[@class='cancel-button global-action z-button']//*[contains(text(),'Annuler')]")
     WebElement buttonAnnuler;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Non lié')]")
+    WebElement nameRadiobuttonNonLie;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Utilisateur existant')]")
+    WebElement nameRadiobuttonUtilisateurExistant;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Créer un nouvel utilisateur')]")
+    WebElement nameRadiobuttonCreerUtilisateur;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Non lié')]/preceding-sibling::input")
+    WebElement radiobuttonNonLie;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Utilisateur existant')]/preceding-sibling::input")
+    WebElement radiobuttonUtilisateurExistant;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Créer un nouvel utilisateur')]/preceding-sibling::input")
+    WebElement radiobuttonCreerUtilisateur;
+
 
     //methods
     //Vérifier la conformité de la page "Liste des participants"
@@ -90,6 +104,17 @@ public class Participants extends ToolBox {
         Utilisateur existant
         Créer un nouvel utilisateur
          */
+        assertTrue(nameRadiobuttonNonLie.isDisplayed());
+        assertTrue(radiobuttonNonLie.isDisplayed());
+        assertTrue(radiobuttonNonLie.isSelected());
+
+        assertTrue(nameRadiobuttonUtilisateurExistant.isDisplayed());
+        assertTrue(radiobuttonUtilisateurExistant.isDisplayed());
+        assertFalse(radiobuttonUtilisateurExistant.isSelected());
+
+        assertTrue(nameRadiobuttonCreerUtilisateur.isDisplayed());
+        assertTrue(radiobuttonCreerUtilisateur.isDisplayed());
+        assertFalse(radiobuttonCreerUtilisateur.isSelected());
     }
 
 }
