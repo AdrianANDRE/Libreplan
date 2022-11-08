@@ -18,16 +18,34 @@ public class Calendrier extends ToolBox {
     WebElement buttonCreer;
     @FindBy(xpath = "//div/input[contains(@class, 'z-textbox')]")
     WebElement fieldNom;
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//td[.=\"Enregistrer\"][@class=\"z-button-cm\"]")
     WebElement buttonEnregistrer;
+    @FindBy(xpath = "//td[.=\"Enregistrer et continuer\"][@class=\"z-button-cm\"]")
+    WebElement buttonEnregistrerContinuer;
+    @FindBy(xpath = "(//td[.=\"Annuler\"][@class=\"z-button-cm\"])[1]")
+    WebElement buttonAnnuler;
     @FindBy(xpath = "//span[.=\"Période\"]")
     WebElement verifPeriode;
     @FindBy(xpath = "//span[.=\"Réservation\"]")
     WebElement verifReservation;
     @FindBy(xpath = "//span[.=\"Type d'exception\"]")
     WebElement verifException;
-//    @FindBy(xpath = "//span[.=\"Période\"]")
-//    WebElement verifPeriode;
+    @FindBy(xpath = "(//div[@class=\"z-row-cnt z-overflow-hidden\"]//input[@type=\"checkbox\"])[1]")
+    WebElement checkBoxCode;
+    @FindBy(xpath = "//div[@class=\"message_INFO\"]//span[contains(.,\"enregistré\")]")
+    WebElement messageInfoCreation;
+    @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]")
+    WebElement calendrierTest1;
+
+    @FindBy(xpath = "//span[.=\"Calendrier - Test 1\"]//ancestor::tr//img[@src=\"/libreplan/common/img/ico_derived1.png\"]")
+    WebElement buttonDeriveTest1;
+
+    @FindBy(xpath = "//span[.=\"Dérivé du calendrier Calendrier - Test 1\"]")
+    WebElement fieldType;
+
+    @FindBy(xpath = "//span[.=\"Calendrier - Test 1 existe déjà\"]")
+    WebElement messageWARNING;
+
 
     //Super contructeur
     public Calendrier(WebDriver driver) {
@@ -44,12 +62,48 @@ public class Calendrier extends ToolBox {
         }
 
     }
-    public void creatCalendrier(){
+    public void creatCalendrierTest1(){
         buttonCreer.click();
+        //Assertion des vérifications de la page
         assertTrue(verifPeriode.isDisplayed());
+        assertTrue(buttonAnnuler.isDisplayed());
+        assertTrue(verifReservation.isDisplayed());
         assertTrue(verifReservation.isDisplayed());
         assertTrue(verifException.isDisplayed());
+        //rentre le nom du calendrier
         fieldNom.clear();
+        fieldNom.sendKeys("Calendrier - Test 1");
+        //Vérifie que la checkbox Générer le code est bien selectionné
+        checkBoxCode.isSelected();
+        buttonEnregistrer.click();
+        messageInfoCreation.isDisplayed();
+        calendrierTest1.isDisplayed();
+
+    }
+    public void creatDerive(){
+        buttonDeriveTest1.click();
+        assertEquals("",fieldNom.getAttribute("value"));
+        fieldType.isDisplayed();
+        fieldNom.sendKeys("Calendrier - Test 1");
+        checkBoxCode.isSelected();
+        buttonEnregistrerContinuer.click();
+        messageWARNING.isDisplayed();
+        fieldNom.sendKeys("Calendrier - Test Calendrier Dérivé");
+        buttonEnregistrerContinuer.click();
+
+
+
+    }
+    public void creatDeriveOK(){
+        buttonDeriveTest1.click();
+        assertEquals("",fieldNom.getAttribute("value"));
+        fieldType.isDisplayed();
+        fieldNom.sendKeys("Calendrier - Test 1");
+        checkBoxCode.isSelected();
+        buttonEnregistrerContinuer.click();
+        messageWARNING.isDisplayed();
+        fieldNom.sendKeys("Calendrier - Test 1");
+
 
 
     }
