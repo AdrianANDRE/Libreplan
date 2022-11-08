@@ -63,12 +63,12 @@ public class Home extends ToolBox {
 
     public Avancement moveToAvancement() {
         accessResourcesMenu();
-        xpathSelectMenu(MenuRessources.avancement).click();
+        driver.findElement(By.xpath("(//div[@class=\"z-menu-item-cm\"]//a[contains(text(),\"avancement\")])[3]")).click();
         return PageFactory.initElements(driver, Avancement.class);
     }
 
 
     public WebElement xpathSelectMenu(MenuRessources menuRessources) {
-        return driver.findElement(By.xpath("//div[@class=\"z-menu-item-cm\"]//a[contains(text(),\"" + menuRessources + "\")]"));
+        return driver.findElement(By.xpath("(//div[@class=\"z-menu-item-cm\"]//a[contains(text(),\"" + menuRessources + "\")])"));
     }
 }
