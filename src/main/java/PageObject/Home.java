@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static junit.framework.Assert.assertTrue;
 
 // Extends ToolBox pour faire usage du super constructeur
-public class Home extends ToolBox{
+public class Home extends ToolBox {
 
     //WebElement avec les xpath de références
     @FindBy(xpath = "//a[@class=\"cerrar_sesion\"]")
@@ -23,33 +23,52 @@ public class Home extends ToolBox{
     public Home(WebDriver driver) {
         super(driver);
     }
+
     //Methode pour LogOut
-    public Login logout(){
+    public Login logout() {
         buttonLogout.click();
         return PageFactory.initElements(driver, Login.class);
 
     }
 
-
-    public void accessResourcesMenu () {
+    public void accessResourcesMenu() {
         wait.until(ExpectedConditions.visibilityOf(RessourcesMenu));
         action.moveToElement(RessourcesMenu).perform();
     }
-    //à partir du mouseOver accessResourcesMenu, les coordonnées des différents menus sont les suivantes :
-    // participants :   y=25
-    // machines :       y=50
-    // calendriers :     y=100
-    public Participants accessParticipants() {
+
+    //Methodes qui font usages de la classe Enum Menu pour définir des xpaths => voir methode xpathSelectMenu
+    public Participants moveToParticipants() {
         accessResourcesMenu();
-        action.moveToElement(RessourcesMenu, 50,25).perform();
-        action.click().perform();
+        xpathSelectMenu(MenuRessources.Participants).click();
         return PageFactory.initElements(driver, Participants.class);
     }
-    public Calendrier accessCalendriers() {
+
+    public Machines moveToMachines() {
         accessResourcesMenu();
-        action.moveToElement(RessourcesMenu, 50,100).perform();
-        action.click().perform();
+        xpathSelectMenu(MenuRessources.Machines).click();
+        return PageFactory.initElements(driver, Machines.class);
+    }
+
+    public Calendrier moveToCalendrier() {
+        accessResourcesMenu();
+        xpathSelectMenu(MenuRessources.Calendriers).click();
         return PageFactory.initElements(driver, Calendrier.class);
     }
 
+    public Critere moveToCritère() {
+        accessResourcesMenu();
+        xpathSelectMenu(MenuRessources.Critère).click();
+        return PageFactory.initElements(driver, Critere.class);
+    }
+
+    public Avancement moveToAvancement() {
+        accessResourcesMenu();
+        xpathSelectMenu(MenuRessources.avancement).click();
+        return PageFactory.initElements(driver, Avancement.class);
+    }
+
+
+    public WebElement xpathSelectMenu(MenuRessources menuRessources) {
+        return driver.findElement(By.xpath("//div[@class=\"z-menu-item-cm\"]//a[contains(text(),\"" + menuRessources + "\")]"));
+    }
 }

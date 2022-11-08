@@ -5,8 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static org.junit.Assert.assertTrue;
-
 public class Login extends ToolBox {
     @FindBy(xpath = "//input[@id=\"textfield\"]")
     WebElement userField;
