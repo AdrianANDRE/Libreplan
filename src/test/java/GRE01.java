@@ -31,11 +31,12 @@ public class GRE01 extends ToolBox {
         //Vérification de la conformité de la page quand elle est sur la liste des participants
         participantsPage.verificationListePartitipants();
         participantsPage.buttonCreer.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         //Vérification de la conformité de la page quand elle est sur la création de participant
         participantsPage.verificationCreerPartitipant();
-        Thread.sleep(2000);
-
+        Thread.sleep(1000);
+        participantsPage.inputDonneesDeBase("Jean", "DU", "jdu", "Ressource normale");
+        Thread.sleep(1000);
     }
     @After
     public void closingUp () {

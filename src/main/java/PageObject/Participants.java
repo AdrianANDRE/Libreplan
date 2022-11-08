@@ -78,6 +78,7 @@ public class Participants extends ToolBox {
 
     @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]/ancestor::tr/descendant::select")
     WebElement dropdownType;
+
     //methods
     //Vérifier la conformité de la page "Liste des participants"
     public void verificationListePartitipants () {
@@ -146,6 +147,14 @@ public class Participants extends ToolBox {
         assertTrue(nameRadiobuttonCreerUtilisateur.isDisplayed());
         assertTrue(radiobuttonCreerUtilisateur.isDisplayed());
         assertFalse(radiobuttonCreerUtilisateur.isSelected());
+    }
+    public void inputDonneesDeBase (String prenom, String nom, String ID, String type) {
+        //renseigner le bloc "données de base"
+        fieldPrenom.sendKeys(prenom);
+        fieldNom.sendKeys(nom);
+        fieldID.sendKeys(ID);
+        Select select = new Select(dropdownType);
+        select.selectByVisibleText(type);
     }
 
 }
