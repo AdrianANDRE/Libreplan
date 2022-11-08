@@ -26,12 +26,15 @@ public class GRE01 extends ToolBox {
         Login log = PageFactory.initElements(driver, Login.class);
         //Accès page d'accueil après s'être login
         Home home = log.login();
-        Thread.sleep(2000);
         //Accès à la page "participants"
         Participants participantsPage = home.moveToParticipants();
-        Thread.sleep(2000);
         //Vérification de la conformité de la page quand elle est sur la liste des participants
         participantsPage.verificationListePartitipants();
+        participantsPage.buttonCreer.click();
+        Thread.sleep(2000);
+        //Vérification de la conformité de la page quand elle est sur la création de participant
+        participantsPage.verificationCreerPartitipant();
+        Thread.sleep(2000);
 
     }
     @After
