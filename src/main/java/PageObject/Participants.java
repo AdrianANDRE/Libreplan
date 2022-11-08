@@ -156,5 +156,9 @@ public class Participants extends ToolBox {
         Select select = new Select(dropdownType);
         select.selectByVisibleText(type);
     }
+    public void inputUtilisateurLie (String username, String password, String passwordConfirmation, String email) {
+        radiobuttonCreerUtilisateur.click();
+        //TODO les locator de ces 4 champs, pour pouvoir y mettre du texte
+    }
 
 }

@@ -28,14 +28,19 @@ public class GRE01 extends ToolBox {
         Home home = log.login();
         //Accès à la page "participants"
         Participants participantsPage = home.moveToParticipants();
+
         //Vérification de la conformité de la page quand elle est sur la liste des participants
         participantsPage.verificationListePartitipants();
         participantsPage.buttonCreer.click();
         Thread.sleep(1000);
+
         //Vérification de la conformité de la page quand elle est sur la création de participant
         participantsPage.verificationCreerPartitipant();
         Thread.sleep(1000);
+
+        //Création d'un participant - cas passant
         participantsPage.inputDonneesDeBase("Jean", "DU", "jdu", "Ressource normale");
+        participantsPage.inputUtilisateurLie("jdu", "$jdumdp1", "$jdumdp1", "jdu@test.fr");
         Thread.sleep(1000);
     }
     @After
