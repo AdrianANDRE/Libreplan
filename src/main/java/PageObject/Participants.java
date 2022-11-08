@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class Participants extends ToolBox {
@@ -75,6 +75,9 @@ public class Participants extends ToolBox {
     WebElement fieldNom;
     @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]/ancestor::td/following-sibling::td/descendant::input")
     WebElement fieldID;
+
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]/ancestor::tr/descendant::select")
+    WebElement dropdownType;
     //methods
     //Vérifier la conformité de la page "Liste des participants"
     public void verificationListePartitipants () {
@@ -127,6 +130,9 @@ public class Participants extends ToolBox {
         assertTrue(fieldID.getText().isEmpty());
         //Type : liste déroulante affichant la valeur "Ressource normale" par défaut
         assertTrue(caseType.isDisplayed());
+        Select select = new Select(dropdownType);
+        String dropdownDefaultValue = select.getFirstSelectedOption().getText();
+        assertEquals("Ressource normale",dropdownDefaultValue);
 
         //bloc utilisateur lié : vérifier que les radio buttons sont présents avec leur label
         assertTrue(nameRadiobuttonNonLie.isDisplayed());
