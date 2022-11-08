@@ -4,8 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class Participants extends ToolBox {
@@ -41,7 +42,42 @@ public class Participants extends ToolBox {
     WebElement buttonEnregistrer;
     @FindBy(xpath = "//div[@class='z-window-embedded']/*/span[@class='cancel-button global-action z-button']//*[contains(text(),'Annuler')]")
     WebElement buttonAnnuler;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Non lié')]")
+    WebElement nameRadiobuttonNonLie;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Utilisateur existant')]")
+    WebElement nameRadiobuttonUtilisateurExistant;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Créer un nouvel utilisateur')]")
+    WebElement nameRadiobuttonCreerUtilisateur;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Non lié')]/preceding-sibling::input")
+    WebElement radiobuttonNonLie;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Utilisateur existant')]/preceding-sibling::input")
+    WebElement radiobuttonUtilisateurExistant;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Créer un nouvel utilisateur')]/preceding-sibling::input")
+    WebElement radiobuttonCreerUtilisateur;
 
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-checkbox-cnt'][contains(text(),'Générer le code')]/preceding-sibling::input")
+    WebElement checkboxGenererCode;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//input[@class='z-textbox z-textbox-disd z-textbox-text-disd'][@disabled]" )
+    WebElement fieldCodeDesactive;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]" )
+    WebElement casePrenom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Code')]" )
+    WebElement caseCode;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::tr/following-sibling::tr[2]//span[contains(text(),'Nom')]" )
+    WebElement caseNom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]" )
+    WebElement caseID;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]")
+    WebElement caseType;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldPrenom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::tr/following-sibling::tr[2]//span[contains(text(),'Nom')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldNom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldID;
+
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]/ancestor::tr/descendant::select")
+    WebElement dropdownType;
     //methods
     //Vérifier la conformité de la page "Liste des participants"
     public void verificationListePartitipants () {
@@ -77,19 +113,39 @@ public class Participants extends ToolBox {
         assertTrue(buttonAnnuler.isDisplayed());
         //Vérifier dans les blocs qu'on a les champs requis
         //bloc données de base
-        /*
-        Code : champ de saisie renseigné avec une valeur par défaut non modifiable et grisé. La case "Générer le code" associée à ce champ est cochée par défaut
-        Prénom : champ de saisie non renseigné
-        Nom : champ de saisie non renseigné
-        ID : champ de saisie non renseigné
-        Type : liste déroulante affichant la valeur "Ressource normale" par défaut
-         */
-        //bloc utilisateur lié
-        /*
-        Non lié : coché par défaut
-        Utilisateur existant
-        Créer un nouvel utilisateur
-         */
+        //Code : champ de saisie renseigné avec une valeur par défaut non modifiable
+        assertTrue(caseCode.isDisplayed());
+        assertTrue(fieldCodeDesactive.isDisplayed());
+        //La case "Générer le code" associée à ce champ est cochée par défaut
+        assertTrue(checkboxGenererCode.isDisplayed());
+        assertTrue(checkboxGenererCode.isSelected());
+        //Prénom : champ de saisie, non renseigné
+        assertTrue(casePrenom.isDisplayed());
+        assertTrue(fieldPrenom.getText().isEmpty());
+        //Nom : champ de saisie, non renseigné
+        assertTrue(caseNom.isDisplayed());
+        assertTrue(fieldNom.getText().isEmpty());
+        //ID : champ de saisie, non renseigné
+        assertTrue(caseID.isDisplayed());
+        assertTrue(fieldID.getText().isEmpty());
+        //Type : liste déroulante affichant la valeur "Ressource normale" par défaut
+        assertTrue(caseType.isDisplayed());
+        Select select = new Select(dropdownType);
+        String dropdownDefaultValue = select.getFirstSelectedOption().getText();
+        assertEquals("Ressource normale",dropdownDefaultValue);
+
+        //bloc utilisateur lié : vérifier que les radio buttons sont présents avec leur label
+        assertTrue(nameRadiobuttonNonLie.isDisplayed());
+        assertTrue(radiobuttonNonLie.isDisplayed());
+        assertTrue(radiobuttonNonLie.isSelected());
+
+        assertTrue(nameRadiobuttonUtilisateurExistant.isDisplayed());
+        assertTrue(radiobuttonUtilisateurExistant.isDisplayed());
+        assertFalse(radiobuttonUtilisateurExistant.isSelected());
+
+        assertTrue(nameRadiobuttonCreerUtilisateur.isDisplayed());
+        assertTrue(radiobuttonCreerUtilisateur.isDisplayed());
+        assertFalse(radiobuttonCreerUtilisateur.isSelected());
     }
 
 }
