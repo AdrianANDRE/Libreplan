@@ -22,8 +22,12 @@ public class CAL_01CreerUnCalendrier extends ToolBox {
         Login log = PageFactory.initElements(driver, Login.class);
         //"Classe de destination" Variable = log."methode"();
         Home home = log.login();
-        home.moveToCalendrier();
-
+        Calendrier calendar = home.moveToCalendrier();
+        calendar.assertionTableau();
+        calendar.creatCalendrierTest1();
+        calendar.creatDerive();
+        calendar.creatCopy();
+        calendar.supprCalendar();
         driver.quit();
 
     }
