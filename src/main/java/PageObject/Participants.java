@@ -55,7 +55,26 @@ public class Participants extends ToolBox {
     @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-radio-cnt'][contains(text(),'Créer un nouvel utilisateur')]/preceding-sibling::input")
     WebElement radiobuttonCreerUtilisateur;
 
-
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//label[@class='z-checkbox-cnt'][contains(text(),'Générer le code')]/preceding-sibling::input")
+    WebElement checkboxGenererCode;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//input[@class='z-textbox z-textbox-disd z-textbox-text-disd'][@disabled]" )
+    WebElement fieldCodeDesactive;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]" )
+    WebElement casePrenom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Code')]" )
+    WebElement caseCode;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::tr/following-sibling::tr[2]//span[contains(text(),'Nom')]" )
+    WebElement caseNom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]" )
+    WebElement caseID;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]")
+    WebElement caseType;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldPrenom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Prénom')]/ancestor::tr/following-sibling::tr[2]//span[contains(text(),'Nom')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldNom;
+    @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]/ancestor::td/following-sibling::td/descendant::input")
+    WebElement fieldID;
     //methods
     //Vérifier la conformité de la page "Liste des participants"
     public void verificationListePartitipants () {
@@ -91,19 +110,25 @@ public class Participants extends ToolBox {
         assertTrue(buttonAnnuler.isDisplayed());
         //Vérifier dans les blocs qu'on a les champs requis
         //bloc données de base
-        /*
-        Code : champ de saisie renseigné avec une valeur par défaut non modifiable et grisé. La case "Générer le code" associée à ce champ est cochée par défaut
-        Prénom : champ de saisie non renseigné
-        Nom : champ de saisie non renseigné
-        ID : champ de saisie non renseigné
-        Type : liste déroulante affichant la valeur "Ressource normale" par défaut
-         */
-        //bloc utilisateur lié
-        /*
-        Non lié : coché par défaut
-        Utilisateur existant
-        Créer un nouvel utilisateur
-         */
+        //Code : champ de saisie renseigné avec une valeur par défaut non modifiable
+        assertTrue(caseCode.isDisplayed());
+        assertTrue(fieldCodeDesactive.isDisplayed());
+        //La case "Générer le code" associée à ce champ est cochée par défaut
+        assertTrue(checkboxGenererCode.isDisplayed());
+        assertTrue(checkboxGenererCode.isSelected());
+        //Prénom : champ de saisie, non renseigné
+        assertTrue(casePrenom.isDisplayed());
+        assertTrue(fieldPrenom.getText().isEmpty());
+        //Nom : champ de saisie, non renseigné
+        assertTrue(caseNom.isDisplayed());
+        assertTrue(fieldNom.getText().isEmpty());
+        //ID : champ de saisie, non renseigné
+        assertTrue(caseID.isDisplayed());
+        assertTrue(fieldID.getText().isEmpty());
+        //Type : liste déroulante affichant la valeur "Ressource normale" par défaut
+        assertTrue(caseType.isDisplayed());
+
+        //bloc utilisateur lié : vérifier que les radio buttons sont présents avec leur label
         assertTrue(nameRadiobuttonNonLie.isDisplayed());
         assertTrue(radiobuttonNonLie.isDisplayed());
         assertTrue(radiobuttonNonLie.isSelected());
