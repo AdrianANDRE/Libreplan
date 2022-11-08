@@ -31,7 +31,7 @@ public class GRE01 extends ToolBox {
         Participants participantsPage = home.moveToParticipants();
         Thread.sleep(2000);
         //Vérification de la conformité de la page quand elle est sur la liste des participants
-        verificationListePartitipants(participantsPage);
+        participantsPage.verificationListePartitipants();
 
     }
     @After
@@ -39,27 +39,5 @@ public class GRE01 extends ToolBox {
         driver.quit();
     }
 
-    public void verificationListePartitipants (Participants participantsPage) {
-        //Vérifier qu'on est bien sur la page des participants
-        assertTrue(participantsPage.titreListeParticipants.isDisplayed());
-        //Vérifier que les colonnes du tableau sont conformes à ce qu'on attend
-        String[] verifTableau = {"Surnom", "Prénom", "ID", "Code", "En file", "Opérations"};
-        for (String name:verifTableau) {
-            WebElement titreColonne = driver.findElement(By.xpath("//th/div[@class=\"z-column-cnt\"][contains(text(),'"+name+"')]"));
-            assertTrue(titreColonne.isDisplayed());
-        }
-        //Vérifier la présence des différents champs et boutons décrits dans le cas de test
-        //- Un champ de recherche "Filtré par" (champ de saisie + icône représentant une loupe)
-        assertTrue(participantsPage.fieldFiltrePar.isDisplayed());
-        assertTrue(participantsPage.iconLoupe.isDisplayed());
-        //- Un champ "Détails personnels"
-        assertTrue(participantsPage.fieldDetailsPerso.isDisplayed());
-        //- Un bouton bleu [Plus d'options]
-        assertTrue(participantsPage.buttonPlusOptions.isDisplayed());
-        //- un bouton vert [Filtre]
-        assertTrue(participantsPage.buttonFiltre.isDisplayed());
-        //- un bouton [Créer]
-        assertTrue(participantsPage.buttonCreer.isDisplayed());
 
-    }
 }
