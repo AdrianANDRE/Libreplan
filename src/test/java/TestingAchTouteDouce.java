@@ -31,7 +31,7 @@ public class TestingAchTouteDouce extends ToolBox {
         //"Classe de destination" Variable = log."methode"();
         Home home = log.login();
         Thread.sleep(2000);
-        Participants participantsPage = home.accessParticipants();
+        Participants participantsPage = home.moveToParticipants();
         Thread.sleep(2000);
 //        home.logout();
 //        driver.quit();
