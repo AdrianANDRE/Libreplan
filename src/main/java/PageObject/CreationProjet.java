@@ -8,11 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import static org.junit.Assert.assertTrue;
 
 
-public class CréationProjet {
+public class CreationProjet {
 
 
 
-        public CréationProjet(WebDriver driver) {
+        public CreationProjet(WebDriver driver) {
+
 
             super();
         }
@@ -38,6 +39,10 @@ public class CréationProjet {
 
         @FindBy(xpath = "//*[@class=\"z-messagebox-btn z-button\"]//td[contains(.,'Annuler')]")
         public WebElement annuler;
+
+
+        @FindBy(xpath = " //*[@class=\"z-button-cm\"][contains(.,'Annuler')]")
+        public WebElement annulerCreation;
 
         @FindBy(xpath = "//tbody/tr[2]/td[contains(.,'OK')]")
         public WebElement ok;
@@ -77,28 +82,29 @@ public class CréationProjet {
 
 
 
-        public void créerUnprojet(WebDriver driver, String nomDuProjet, String numerosProjet, String dateDebutprojet, String dateFinProjet) {
+        public void  creerUnprojet(String nomDuProjet, String numerosProjet, String dateDebutprojet, String dateFinProjet) {
+
+
+
+
+
                 ajouter.click();
                 assertTrue(decocher.isDisplayed());
                 assertTrue(nomProjet.getText().isEmpty());
                 assertTrue(debutProjet.isDisplayed());
                 assertTrue(finProjet.getText().isEmpty());
                 assertTrue(accepter.isDisplayed());
-                assertTrue(annuler.isDisplayed());
+                assertTrue(annulerCreation.isDisplayed());
                 assertTrue(champClient.getText().isEmpty());
 
 
-
-
-
-
-                nomProjet.sendKeys("nomDuProjet");
+                nomProjet.sendKeys(nomDuProjet);
                 decocher.click();
                 codeProjet.clear();
-                codeProjet.sendKeys("numerosProjet");
+                codeProjet.sendKeys(numerosProjet);
                 debutProjet.clear();
-                debutProjet.sendKeys("dateDebutprojet");
-                finProjet.sendKeys("dateFinProjet");
+                debutProjet.sendKeys(dateDebutprojet);
+                finProjet.sendKeys(dateFinProjet);
                 accepter.click();
 
         }
@@ -109,23 +115,26 @@ public class CréationProjet {
 
         }
 
-        public void testAnnulerEdition1(WebDriver driver){
+        public void testAnnulerEdition1(){
                 annulerEdition.click();
                 annuler.click();
 
 
         }
-        public void testAnnulerEdition2(WebDriver driver){
+        public void testAnnulerEdition2(){
                 annulerEdition.click();
                 ok.click();
         }
 
-        public void afficherProjets(WebDriver driver){
+        public void  afficherProjets (WebDriver driver){
 
                 Actions a = new Actions(driver);
                 a.moveToElement(menuCalendrier).perform();
                 menuProjet.click();
         }
 
+//LocalDateTime date = LocalDateTime.now();
+//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+//String text = date.format(formatter);
 
 }

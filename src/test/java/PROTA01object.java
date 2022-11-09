@@ -41,7 +41,10 @@ public class PROTA01object {WebDriver driver;
         Thread.sleep(5000);
 
         CreationProjet creation =PageFactory.initElements(driver,CreationProjet.class );
-        creation.creerUnprojet(driver,"projet1","001","15/11/2022","22/11/2022");
+        creation.creerUnprojet("projet1","001","15/11/2022","22/11/2022");
+        creation.testAnnulerEdition1();
+        creation.testAnnulerEdition2();
+        creation.afficherProjets(driver);
 
 
 
