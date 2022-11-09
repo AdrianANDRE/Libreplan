@@ -45,6 +45,7 @@ public class PROTA01object {WebDriver driver;
         creation.testAnnulerEdition1();
         creation.testAnnulerEdition2();
         creation.afficherProjets(driver);
+        creation.supprimerLeProjet();
 
 
 
