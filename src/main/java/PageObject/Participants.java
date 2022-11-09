@@ -39,6 +39,7 @@ public class Participants extends ToolBox {
     @FindBy(xpath = "//div[@class='z-window-embedded']//span[@class='saveandcontinue-button global-action z-button']//*[contains(text(),'Sauver et continuer')]")
     WebElement buttonSauvegarder;
     @FindBy(xpath = "//div[@class='z-window-embedded']/*/span[@class='save-button global-action z-button']//*[contains(text(),'Enregistrer')]")
+    public
     WebElement buttonEnregistrer;
     @FindBy(xpath = "//div[@class='z-window-embedded']/*/span[@class='cancel-button global-action z-button']//*[contains(text(),'Annuler')]")
     WebElement buttonAnnuler;
@@ -75,9 +76,22 @@ public class Participants extends ToolBox {
     WebElement fieldNom;
     @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'ID')]/ancestor::td/following-sibling::td/descendant::input")
     WebElement fieldID;
-
     @FindBy(xpath = "//div[@class='z-fieldset-cnt']//span[@class='z-label'][contains(text(),'Type')]/ancestor::tr/descendant::select")
     WebElement dropdownType;
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]")
+    WebElement titrepanelUtilisateurLieNouveau;
+    // sous menus pour l'utilisateur à lier existant : //div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]/following-sibling::div[@class='z-panel-body']
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]/following-sibling::div[@class='z-panel-body']/descendant::span[@class='z-label'][contains(text(),'Nom')]/ancestor::tr/descendant::input")
+    WebElement fieldNomUtilLieNouveau;
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]/following-sibling::div[@class='z-panel-body']/descendant::span[@class='z-label'][contains(text(),'Mot')]/ancestor::tr/descendant::input")
+    WebElement fieldmdpUtilLieNouveau;
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]/following-sibling::div[@class='z-panel-body']/descendant::span[@class='z-label'][contains(text(),'mot')]/ancestor::tr/descendant::input")
+    WebElement fieldconfmdpUtilLieNouveau;
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Nouvel utilisateur')]/following-sibling::div[@class='z-panel-body']/descendant::span[@class='z-label'][contains(text(),'mail')]/ancestor::tr/descendant::input")
+    WebElement fieldmailUtilLieNouveau;
+
+    @FindBy(xpath = "//div[@class='z-panel-header '][contains(text(),'Utilisateur existant')]")
+    WebElement titrepanelUtilisateurLieExistant;
 
     //methods
     //Vérifier la conformité de la page "Liste des participants"
@@ -158,7 +172,20 @@ public class Participants extends ToolBox {
     }
     public void inputUtilisateurLie (String username, String password, String passwordConfirmation, String email) {
         radiobuttonCreerUtilisateur.click();
-        //TODO les locator de ces 4 champs, pour pouvoir y mettre du texte
+        fieldNomUtilLieNouveau.sendKeys(username);
+        fieldmdpUtilLieNouveau.sendKeys(password);
+        fieldconfmdpUtilLieNouveau.sendKeys(passwordConfirmation);
+        fieldmailUtilLieNouveau.sendKeys(email);
+    }
+    public static void deleteUser(String id) {
+        WebElement buttonDeleteUser = driver.findElement(By.xpath("//span[@class='z-label'][contains(text(),'"+id+"')]/ancestor::tr//descendant::img[@src='/libreplan/common/img/ico_borrar1.png']"));
+        buttonDeleteUser.click();
+        WebElement buttonOKpopUpSuppression = driver.findElement(By.xpath("//td[@class='z-button-cm'][contains(text(),'OK')]"));
+        buttonOKpopUpSuppression.click();
+    }
+    public static void deleteUserLie () {
+        WebElement buttonOKSuppressionUtilLie = driver.findElement(By.xpath("//td[@class='z-button-cm'][contains(text(),'Oui')]"));
+        buttonOKSuppressionUtilLie.click();
     }
 
 }
