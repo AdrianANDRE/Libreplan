@@ -43,7 +43,7 @@ public class PROTA01object extends ToolBox {
 
         CreationProjet creation =PageFactory.initElements(driver,CreationProjet.class );
         Thread.sleep(3000);
-        creation.creerUnprojet("projet1","001","15/11/2022","22/11/2022");
+        creation.creerUnprojet("PROJET_TEST1","PRJTEST001","15/11/2022","22/11/2022");
         creation.testVerifButton1(driver);
         creation.testAnnulerEdition1();
         creation.testAnnulerEdition2();
