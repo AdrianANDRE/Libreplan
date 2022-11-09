@@ -1,17 +1,18 @@
 package PageObject;
 
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.apache.log4j.Logger;
-
-
+import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.*;
 
 public class Calendrier extends ToolBox {
-    static Logger log = Logger.getLogger(Calendrier.class);
+    //Permet de faire usage des fonctions logger
+    private static final Logger log =  LogManager.getLogger(Calendrier.class);
+    //Liste des WebElement avec lequel nous allons intéragir
     @FindBy(xpath = "//div[@class=\"z-dottree\"]/following-sibling::span")
     WebElement buttonCreer;
     @FindBy(xpath = "//div/input[contains(@class, 'z-textbox')]")
@@ -40,6 +41,7 @@ public class Calendrier extends ToolBox {
     WebElement fieldType;
     @FindBy(xpath = "//span[.=\"Calendrier - Test 1 existe déjà\"]")
     WebElement messageWARNING;
+    //Nous effectuons des contrôles via les xpath comme l'exemple ci dessous , en partant du Calendrier - Test 1 je suis sûr que le bouton avec le quel je vais intéragir c'est le bon qui est lié à ce que je désir
     @FindBy(xpath = "//div[.=\"Calendrier - Test 1\"]/ancestor::tr/following-sibling::tr//span[contains(.,\"Test Calendrier Dérivé\")]")
     WebElement deriveTableUnderTest01;
     @FindBy(xpath = "//span[@class=\"z-dottree-ico z-dottree-root-open\"]")
@@ -93,7 +95,7 @@ public class Calendrier extends ToolBox {
         log.info("Le Calendrier - Test 1 est bien présent dans le tableau des calendriers");
     }
 
-    public void creatDerive() throws InterruptedException {
+    public void creatDeriveCalendar() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(buttonDeriveTest1)).click();
         assertEquals("", wait.until(ExpectedConditions.visibilityOf(fieldNom)).getAttribute("value"));
         log.info("Le champ nom est bien vide ");
@@ -118,7 +120,7 @@ public class Calendrier extends ToolBox {
         log.info("Le calendrier dérivé est bien un élément sous le Calendrier Test 1");
     }
 
-    public void creatCopy() throws InterruptedException {
+    public void creatCopyCalendar() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(buttonCopyTest1)).click();
         wait.until(ExpectedConditions.visibilityOf(fieldNom));
         assertEquals("Calendrier - Test 1", fieldNom.getAttribute("value"));
