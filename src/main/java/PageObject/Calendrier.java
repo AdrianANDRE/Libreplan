@@ -74,8 +74,8 @@ public class Calendrier extends ToolBox {
         }
     }
 
-    public void creatCalendrierTest1() throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(buttonCreer)).click();
+    public void creatCalendrierTest1() throws Exception {
+       try {wait.until(ExpectedConditions.elementToBeClickable(buttonCreer)).click();
         //Assertion des vérifications de la page
         assertTrue((wait.until(ExpectedConditions.visibilityOf(verifPeriode))).isDisplayed());
         assertTrue((wait.until(ExpectedConditions.visibilityOf(buttonAnnuler))).isDisplayed());
@@ -92,11 +92,14 @@ public class Calendrier extends ToolBox {
         wait.until(ExpectedConditions.visibilityOf(buttonEnregistrer)).click();
         assertTrue((wait.until(ExpectedConditions.visibilityOf(messageInfoCreation))).isDisplayed());
         assertTrue((wait.until(ExpectedConditions.visibilityOf(calendrierTest1))).isDisplayed());
-        log.info("Le Calendrier - Test 1 est bien présent dans le tableau des calendriers");
+        log.info("Le Calendrier - Test 1 est bien présent dans le tableau des calendriers");}
+       catch (Exception e){
+           takeSnapShot("target/snapshot/libreplan.png");
+       }
     }
 
-    public void creatDeriveCalendar() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(buttonDeriveTest1)).click();
+    public void creatDeriveCalendar() throws Exception {
+        try{wait.until(ExpectedConditions.visibilityOf(buttonDeriveTest1)).click();
         assertEquals("", wait.until(ExpectedConditions.visibilityOf(fieldNom)).getAttribute("value"));
         log.info("Le champ nom est bien vide ");
         assertTrue((wait.until(ExpectedConditions.visibilityOf(fieldType))).isDisplayed());
@@ -117,11 +120,14 @@ public class Calendrier extends ToolBox {
         wait.until(ExpectedConditions.visibilityOf(deriveTableUnderTest01)).isDisplayed();
         wait.until(ExpectedConditions.visibilityOf(dottreeOpen)).click();
         assertFalse(deriveTableUnderTest01.isDisplayed());
-        log.info("Le calendrier dérivé est bien un élément sous le Calendrier Test 1");
+        log.info("Le calendrier dérivé est bien un élément sous le Calendrier Test 1");}
+        catch (Exception e){
+            takeSnapShot("target/snapshot/libreplan.png");
+        }
     }
 
-    public void creatCopyCalendar() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOf(buttonCopyTest1)).click();
+    public void creatCopyCalendar() throws Exception {
+        try{wait.until(ExpectedConditions.visibilityOf(buttonCopyTest1)).click();
         wait.until(ExpectedConditions.visibilityOf(fieldNom));
         assertEquals("Calendrier - Test 1", fieldNom.getAttribute("value"));
         assertEquals("Calendrier source", fieldType.getText());
@@ -135,12 +141,16 @@ public class Calendrier extends ToolBox {
         wait.until(ExpectedConditions.visibilityOf(buttonEnregistrer)).click();
         wait.until(ExpectedConditions.visibilityOf(messageInfoCreation)).isDisplayed();
         wait.until(ExpectedConditions.visibilityOf(inTableButNotUnderTest01)).isDisplayed();
-        log.info("Le calendrier est bien présent dans le tableau général");
+        log.info("Le calendrier est bien présent dans le tableau général");}
+        catch (Exception e){
+            takeSnapShot("target/snapshot/libreplan.png");
+        }
 
 
     }
 
-    public void supprCalendar() throws InterruptedException {
+    public void supprCalendar() throws Exception {
+        try{
         wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest2));
         buttonSupprTest2.click();
         buttonOK.click();
@@ -152,6 +162,9 @@ public class Calendrier extends ToolBox {
         buttonOK.click();
         synchronized (wait){
         wait.wait(2000);
+        }}
+        catch (Exception e){
+        takeSnapShot("target/snapshot/libreplan.png");
         }
     }
 }

@@ -22,7 +22,7 @@ public class CAL_01CreerUnCalendrier extends ToolBox {
 
 
     @Test
-    public void connect() throws InterruptedException {
+    public void connect() throws Exception {
         //Permet d'instancier la classe Login
         Login log = PageFactory.initElements(driver, Login.class);
         //Permet de se login et de donner une variable pour intéragir avec les méthodes de la CLasse Home

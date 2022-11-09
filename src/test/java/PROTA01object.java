@@ -1,6 +1,5 @@
 
 import PageObject.Login;
-import PageObject.CreationProjet;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -40,8 +39,8 @@ public class PROTA01object {WebDriver driver;
         log.login();
         Thread.sleep(5000);
 
-        CreationProjet creation =PageFactory.initElements(driver,CreationProjet.class );
-        creation.creerUnprojet(driver,"projet1","001","15/11/2022","22/11/2022");
+//        CreationProjet creation =PageFactory.initElements(driver,CreationProjet.class );
+//        creation.creerUnprojet(driver,"projet1","001","15/11/2022","22/11/2022");
 
 
 
