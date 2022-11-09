@@ -1,6 +1,10 @@
 
+import PageObject.Home;
 import PageObject.Login;
 import PageObject.CreationProjet;
+import PageObject.ToolBox;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,49 +19,43 @@ import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
-
-
 import static org.junit.Assert.assertTrue;
 
 
-public class PROTA01object {WebDriver driver;
-    Wait wait;
-    Actions action;
+public class PROTA01object extends ToolBox {
+    public PROTA01object() {
+        super(driver);
+        Wait wait;
+        Actions action;
+    }
+    @Before
+    public void initialization() {
+        ToolBox.startup();
+    }
+
+
     @Test
     public void testPROTA01 () throws InterruptedException {
-        //locate Driver
-//        System.setProperty("webdriver.chrome.driver","src/main/java/resources/Driver/chromedriver.exe");
-//        driver = new ChromeDriver();
-        //
-        System.setProperty("webdriver.gecko.driver","src/main/resources/Driver/geckodriver.exe");
-        driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver,15);
-        action = new Actions(driver);
-        driver.get("http://localhost:8080/libreplan/common/layout/login.zul");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        //Permet d'instancier la classe Login
         Login log = PageFactory.initElements(driver, Login.class);
-        log.login();
-        Thread.sleep(5000);
+        //Permet de se login et de donner une variable pour intéragir avec les méthodes de la CLasse Home
+        Home home = log.login();
 
         CreationProjet creation =PageFactory.initElements(driver,CreationProjet.class );
+        Thread.sleep(3000);
         creation.creerUnprojet("projet1","001","15/11/2022","22/11/2022");
+        creation.testVerifButton1(driver);
         creation.testAnnulerEdition1();
         creation.testAnnulerEdition2();
         creation.afficherProjets(driver);
         creation.supprimerLeProjet();
 
 
-
-
-
-
     }
 
-
-
-
-
-
+    @After
+    public void after() {
+        driver.quit();
+    }
 
 }

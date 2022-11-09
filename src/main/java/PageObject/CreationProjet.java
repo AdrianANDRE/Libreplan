@@ -97,6 +97,15 @@ public class CreationProjet {
         public WebElement verifProjet;
 
 
+        @FindBy(xpath="//td[@class=\"z-button-cm\"][contains(text(),'Liste des projets')]")
+        public WebElement listeDesProjets;
+
+        @FindBy(xpath="//img[@src=\"/libreplan/common/img/ico_save.png\"]")
+        public WebElement disquette;
+        @FindBy(xpath="//table[@class=\"z-button-over\"]")
+        public WebElement infoBulle;
+
+
 
 
 
@@ -144,15 +153,28 @@ public class CreationProjet {
                 //        String dropdownDefaultValue = select.getFirstSelectedOption().getText();
                 //        assertEquals("Ressource normale",dropdownDefaultValue);
 
-
+                //Renseigner l'ensemble des champs avec les valeurs suivantes :
+                //Nom : PROJET_TEST1
                 nomProjet.sendKeys(nomDuProjet);
+                //Code : décocher la case "Générer le code"
+                // puis saisir la valeur suivante dans le champ de saisie qui devient éditable : "PRJTEST001"
                 decocher.click();
                 codeProjet.clear();
                 codeProjet.sendKeys(numerosProjet);
+                //Date de début :  date J+5
                 debutProjet.clear();
                 debutProjet.sendKeys(dateDebutprojet);
+                //Echeance :  date J+15
                 finProjet.sendKeys(dateFinProjet);
+                //Cliquer sur le bouton [Accepter].
                 accepter.click();
+                //Le projet est créé :
+
+                //Dans le menu vertical à gauche de la page -> menu affiché = "Détail du projet"
+                assertTrue(detailProjet.isDisplayed());
+
+                //Dans le menu horizontal -> onglet affiché = "WBS (tâches)"
+                assertTrue(WBS.isDisplayed());
 
         }
 
@@ -162,7 +184,37 @@ public class CreationProjet {
 
         }
 
-        public void testAnnulerEdition1(){
+
+
+        public void testVerifButton1(WebDriver driver) {
+                Actions a = new Actions(driver);
+
+                //Vérifier la présence des boutons d'enregistrement et d'annulation de l'édition du projet.
+                //- Bouton d'enregistrement :
+                //icône représentant une disquette
+                //infobulle associée à l'icône "Enregistrer le projet"
+                a.moveToElement(disquette).perform();
+                assertTrue(infoBulle.isDisplayed());
+
+                //- Bouton d'annulation de l'édition : icône représentant une flèche retour
+                a.moveToElement(annulerEdition).perform();
+                assertTrue(infoBulle.isDisplayed());
+                //infobulle associée à l'icône "Annuler l'édition"
+
+
+        }
+
+
+        public void testAnnulerEdition1 (){
+
+                //Vérifier la présence des boutons d'enregistrement et d'annulation de l'édition du projet.
+                //- Bouton d'enregistrement :
+                //icône représentant une disquette
+                //infobulle associée à l'icône "Enregistrer le projet"
+                //- Bouton d'annulation de l'édition : icône représentant une flèche retour
+                assertTrue(annulerEdition.isDisplayed());
+                //infobulle associée à l'icône "Annuler l'édition"
+
 
                // Cliquer sur le bouton d'annulation de l'édition du projet.
                 annulerEdition.click();
@@ -209,10 +261,26 @@ public class CreationProjet {
                 menuProjet.click();
                 //La liste est affichée à droite du menu vertical, le projet créé y est présent.
                 assertTrue(verifProjet.isDisplayed());
-
-
-
                 //Dans le menu vertical à gauche de la page -> menu affiché = "Liste des projets".
+                assertTrue(listeDesProjets.isDisplayed());
+                //Vérifier la conformité des informations affichées pour le projet dans la liste affichée.
+
+                // Nom : PROJET_TEST1
+                //Code : PRJTEST001
+
+                // Date de début : date J+5
+
+                //Echéance : date J+15
+
+                //Client : champ non renseigné
+
+                //Budget total : 0 €
+
+                // Heures : 0
+
+                // : PRE-VENTES
+
+                // Opérations : 4 icones : modifier, supprimer, voir la prévision, créer un modèl
 
 
         }
