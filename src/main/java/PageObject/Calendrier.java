@@ -160,11 +160,12 @@ public class Calendrier extends ToolBox {
         wait.until(ExpectedConditions.elementToBeClickable(buttonSupprTest1));
         buttonSupprTest1.click();
         buttonOK.click();
+        log.info("L'ensembles des calendriers sont bien supprimés");
         synchronized (wait){
         wait.wait(2000);
         }}
         catch (Exception e){
-        takeSnapShot("target/snapshot/libreplan.png");
+        takeSnapShot("target/snapshot/supprCalendar.png");
         }
     }
 }
